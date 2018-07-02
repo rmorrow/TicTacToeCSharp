@@ -10,9 +10,12 @@ namespace TicTacToe
     {
         //TicTacToe board positions
         private static char[] board = new char[9] { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+        //Winning board will be displayed at end of game
+        private static char[] winningBoard = new char[9];
         private String name;
         //List used to store players
         private static List<Program> players = new List<Program>();
+        private static String winner;
 
         public Program(String name)
         {
@@ -44,13 +47,27 @@ namespace TicTacToe
         }
 
         //Called everytime the board needs to be redrawn.
-        public static void DrawBoard()
+        private static void DrawBoard()
         {
             Console.WriteLine();
             for (int i = 0; i < board.Length; i++)
             {
 
                 Console.Write(board[i] + " | ");
+                if ((i > 0) && ((i + 1) % 3 == 0))
+                    Console.WriteLine("\n ----------");
+            }
+
+        }
+
+        //Called only after winner is determined. Used for flashing announcement at end of game.
+        private static void DrawWinningBoard()
+        {
+            Console.WriteLine();
+            for (int i = 0; i < winningBoard.Length; i++)
+            {
+
+                Console.Write(winningBoard[i] + " | ");
                 if ((i > 0) && ((i + 1) % 3 == 0))
                     Console.WriteLine("\n ----------");
             }
@@ -89,7 +106,7 @@ namespace TicTacToe
                         board[move - 1] = character;
                         if (CheckForWinner())
                         {
-                            Console.WriteLine("You won " + players[turn].GetPlayerName() + "!!!");
+                            winner = players[turn].GetPlayerName();
                             break;
                         }
                         if (turn.Equals(0))
@@ -110,6 +127,7 @@ namespace TicTacToe
                 DrawBoard();
 
             }
+            DisplayWinner(winner);
         }
         //Check for winner after each play
         private static Boolean CheckForWinner()
@@ -117,45 +135,135 @@ namespace TicTacToe
 
             //Check to see if player1 won
             if (board[0] == 'X' && board[1] == 'X' && board[2] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[1] = winningBoard[2] = ' ';
                 return true;
+            }
             else if (board[0] == 'X' && board[1] == 'X' && board[2] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[2] = winningBoard[2] = ' ';
                 return true;
+            }
             else if (board[3] == 'X' && board[4] == 'X' && board[5] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[3] = winningBoard[4] = winningBoard[5] = ' ';
                 return true;
+            }
             else if (board[6] == 'X' && board[7] == 'X' && board[8] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[6] = winningBoard[7] = winningBoard[8] = ' ';
                 return true;
+            }
             else if (board[0] == 'X' && board[3] == 'X' && board[6] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[3] = winningBoard[6] = ' ';
                 return true;
+            }
             else if (board[1] == 'X' && board[4] == 'X' && board[7] == 'X')
+            {
+
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[1] = winningBoard[4] = winningBoard[7] = ' ';
                 return true;
+            }
             else if (board[2] == 'X' && board[5] == 'X' && board[8] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[2] = winningBoard[5] = winningBoard[8] = ' ';
                 return true;
+            }
             else if (board[0] == 'X' && board[4] == 'X' && board[8] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[4] = winningBoard[8] = ' ';
                 return true;
+            }
             else if (board[2] == 'X' && board[4] == 'X' && board[6] == 'X')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[2] = winningBoard[4] = winningBoard[6] = ' ';
                 return true;
+            }
 
             //Check to see if player2 won
             else if (board[0] == 'O' && board[1] == 'O' && board[2] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[1] = winningBoard[2] = ' ';
                 return true;
+            }
             else if (board[0] == 'O' && board[1] == 'O' && board[2] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[1] = winningBoard[2] = ' ';
                 return true;
+            }
             else if (board[3] == 'O' && board[4] == 'O' && board[5] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[3] = winningBoard[4] = winningBoard[5] = ' ';
                 return true;
+            }
             else if (board[6] == 'O' && board[7] == 'O' && board[8] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[6] = winningBoard[7] = winningBoard[8] = ' ';
                 return true;
+            }
             else if (board[0] == 'O' && board[3] == 'O' && board[6] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[3] = winningBoard[6] = ' ';
                 return true;
+            }
             else if (board[1] == 'O' && board[4] == 'O' && board[7] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[1] = winningBoard[4] = winningBoard[7] = ' ';
                 return true;
+            }
             else if (board[2] == 'O' && board[5] == 'O' && board[8] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[2] = winningBoard[5] = winningBoard[8] = ' ';
                 return true;
+            }
             else if (board[0] == 'O' && board[4] == 'O' && board[8] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[0] = winningBoard[4] = winningBoard[8] = ' ';
                 return true;
+            }
             else if (board[2] == 'O' && board[4] == 'O' && board[6] == 'O')
+            {
+                Array.Copy(board, winningBoard, board.Length);
+                winningBoard[2] = winningBoard[4] = winningBoard[6] = ' ';
                 return true;
+            }
 
             return false;
+        }
+
+        //Displays flashing announcement of winning play
+        private static void DisplayWinner(String winner)
+        {
+            while (1 > 0)
+            {
+                Console.Clear();
+                Console.WriteLine("You Won " + winner + "!!");
+                DrawBoard();
+                System.Threading.Thread.Sleep(400);
+                Console.Clear();
+                Console.WriteLine("You Won " + winner + "!!");
+                DrawWinningBoard();
+                System.Threading.Thread.Sleep(400);
+
+            }
         }
 
     }
